@@ -1,10 +1,5 @@
-import DashboardView from "@/sections/dashboard/views/dashboard-view";
+import { redirect } from 'next/navigation';
 
-export const metadata = {
-    title: 'Dashbord',
-};
-
-
-export default function Page() {
-    return <DashboardView/>;
+export default function Home() {
+  redirect('/login');
 }
