@@ -20,26 +20,48 @@ type Props = {
     children: React.ReactNode;
 };
 
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#2065D1',
+            darker: '#103996',
+            lighter: '#D1E9FC',
+        },
+        background: {
+            default: '#F9FAFB',
+            paper: '#FFFFFF',
+        },
+    },
+    typography: {
+        fontFamily: '"Public Sans", sans-serif',
+        h4: {
+            fontWeight: 700,
+        },
+    },
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    textTransform: 'none',
+                    borderRadius: '8px',
+                    padding: '8px 22px',
+                    height: '48px',
+                },
+            },
+        },
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    '& .MuiOutlinedInput-root': {
+                        borderRadius: '8px',
+                    },
+                },
+            },
+        },
+    },
+});
+
 export default function ThemeProvider({children}: Props) {
-
-    const memoizedValue = useMemo(
-        () => ({
-            palette: {
-                ...palette,
-            },
-            customShadows: {
-                ...customShadows(),
-            },
-            shadows: shadows(),
-            shape: {borderRadius: 8},
-            typography,
-        }), []
-    );
-
-    const theme = createTheme(memoizedValue as ThemeOptions);
-
-    theme.components = componentsOverrides(theme);
-
     return (
         <MuiThemeProvider theme={theme}>
             <CssBaseline/>

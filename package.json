@@ -1,33 +1,32 @@
 {
-  "name": "hiublue-frontend-recruitment",
-  "version": "0.0.1",
+  "name": "hiublue-admin",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "post-update": "echo \"codesandbox preview only, need an update\" && pnpm update --latest"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/cache": "latest",
-    "@emotion/react": "latest",
-    "@emotion/styled": "latest",
-    "@iconify/react": "^5.2.0",
-    "@mui/material": "^6.4.4",
-    "@mui/material-nextjs": "next",
-    "lodash": "^4.17.21",
-    "next": "^15.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.6",
+    "@mui/material": "^5.15.6",
+    "@mui/material-nextjs": "^6.4.3",
+    "@mui/x-date-pickers": "^7.27.0",
+    "apexcharts": "^4.0.0",
+    "date-fns": "2.30.0",
+    "next": "14.1.0",
+    "notistack": "^3.0.1",
+    "react": "^18.2.0",
+    "react-apexcharts": "^1.4.1",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.15",
-    "@types/node": "latest",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "eslint": "latest",
-    "eslint-config-next": "^15.0.0",
-    "typescript": "latest"
+    "@types/node": "^20.11.5",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "typescript": "^5.3.3"
   }
 }
