@@ -114,31 +114,47 @@ export default function OfferList() {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={{ 
+        borderBottom: 1, 
+        borderColor: 'divider',
+        overflowX: 'auto'
+      }}>
         <Tabs 
           value={statusFilter} 
           onChange={(_, newValue) => setStatusFilter(newValue)}
-          sx={{ px: 2 }}
+          sx={{ 
+            px: { xs: 1, sm: 2 },
+            minHeight: 48
+          }}
         >
           <Tab label="All" value="all" />
           <Tab label="Accepted" value="accepted" />
         </Tabs>
       </Box>
 
-      <Box sx={{ p: 2, display: 'flex', gap: 2 }}>
+      <Box sx={{ 
+        p: { xs: 1, sm: 2 }, 
+        display: 'flex', 
+        flexDirection: { xs: 'column', sm: 'row' },
+        gap: 2 
+      }}>
         <TextField
           size="small"
           placeholder="Search..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          sx={{ width: 200 }}
+          sx={{ 
+            width: { xs: '100%', sm: 200 }
+          }}
         />
         <TextField
           select
           size="small"
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
-          sx={{ width: 120 }}
+          sx={{ 
+            width: { xs: '100%', sm: 120 }
+          }}
         >
           <MenuItem value="all">All</MenuItem>
           <MenuItem value="monthly">Monthly</MenuItem>
@@ -152,9 +168,9 @@ export default function OfferList() {
           <TableHead>
             <TableRow sx={{ bgcolor: 'grey.50' }}>
               <TableCell>Name</TableCell>
-              <TableCell>Phone number</TableCell>
-              <TableCell>Company</TableCell>
-              <TableCell>Job Title</TableCell>
+              <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>Phone number</TableCell>
+              <TableCell sx={{ display: { xs: 'none', sm: 'table-cell' } }}>Company</TableCell>
+              <TableCell sx={{ display: { xs: 'none', lg: 'table-cell' } }}>Job Title</TableCell>
               <TableCell>Type</TableCell>
               <TableCell>Status</TableCell>
               <TableCell align="right">Actions</TableCell>
@@ -184,9 +200,9 @@ export default function OfferList() {
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>{offer.phone}</TableCell>
-                  <TableCell>{offer.company}</TableCell>
-                  <TableCell>{offer.jobTitle}</TableCell>
+                  <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>{offer.phone}</TableCell>
+                  <TableCell sx={{ display: { xs: 'none', sm: 'table-cell' } }}>{offer.company}</TableCell>
+                  <TableCell sx={{ display: { xs: 'none', lg: 'table-cell' } }}>{offer.jobTitle}</TableCell>
                   <TableCell>{offer.type}</TableCell>
                   <TableCell>
                     <Chip
@@ -219,6 +235,11 @@ export default function OfferList() {
         onRowsPerPageChange={(e) => {
           setRowsPerPage(parseInt(e.target.value, 10));
           setPage(0);
+        }}
+        sx={{
+          '.MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows': {
+            display: { xs: 'none', sm: 'block' }
+          }
         }}
       />
 

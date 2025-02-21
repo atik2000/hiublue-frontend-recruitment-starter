@@ -87,25 +87,32 @@ export default function CreateOfferPage() {
       return;
     }
 
-    if (!formData.price) {
-      enqueueSnackbar('Please enter a price', { variant: 'error' });
+    if (!formData.price || formData.price <= 0) {
+      enqueueSnackbar('Please enter a valid price', { variant: 'error' });
       return;
     }
 
     setIsLoading(true);
 
     try {
-      console.log('Submitting form data:', formData); // For debugging
+      // Log the form data for debugging
+      console.log('Submitting form data:', formData);
+
       const response = await createOffer(formData);
-      console.log('Create offer response:', response); // For debugging
+      console.log('Create offer response:', response);
       
-      enqueueSnackbar('Offer created successfully', { variant: 'success' });
-      router.push('/onboarding');
+      if (response.success) {
+        enqueueSnackbar('Offer created successfully', { variant: 'success' });
+        router.push('/onboarding');
+      } else {
+        throw new Error('Failed to create offer');
+      }
     } catch (error) {
       console.error('Error creating offer:', error);
-      enqueueSnackbar(error instanceof Error ? error.message : 'Failed to create offer', { 
-        variant: 'error' 
-      });
+      enqueueSnackbar(
+        error instanceof Error ? error.message : 'Failed to create offer', 
+        { variant: 'error' }
+      );
     } finally {
       setIsLoading(false);
     }

@@ -5,23 +5,34 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  Avatar,
   Menu,
   MenuItem,
   Box,
+  useMediaQuery,
+  useTheme,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
 } from '@mui/material';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { logout } from '@/services/api';
 import { 
   Logout as LogoutIcon,
-  AccountCircle as AccountCircleIcon,
-  Dashboard as DashboardIcon 
+  Menu as MenuIcon,
+  Dashboard as DashboardIcon,
+  People as PeopleIcon,
 } from '@mui/icons-material';
 
 export default function Header() {
   const router = useRouter();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -29,6 +40,10 @@ export default function Header() {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
   };
 
   const handleLogout = async () => {
@@ -41,46 +56,128 @@ export default function Header() {
     handleMenuClose();
   };
 
+  const handleNavigation = (path: string) => {
+    router.push(path);
+    setMobileOpen(false);
+  };
+
+  const drawerContent = (
+    <Box sx={{ width: 250 }}>
+      <Box sx={{ p: 2 }}>
+        <img src="/logo.png" alt="logo" width={40} height={40} />
+      </Box>
+      <Divider />
+      <List>
+        <ListItem button onClick={() => handleNavigation('/dashboard')}>
+          <ListItemIcon>  
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
+        <ListItem button onClick={() => handleNavigation('/onboarding')}>
+          <ListItemIcon>
+            <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Onboarding" />
+        </ListItem>
+      </List>
+    </Box>
+  );
+
   return (
-    <AppBar 
-      position="fixed" 
-      sx={{ 
-        zIndex: (theme) => theme.zIndex.drawer + 1,
-        bgcolor: 'white',
-        color: 'text.primary',
-      }}
-    >
-      <Toolbar>
-        <DashboardIcon sx={{ mr: 2 }} />
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'inherit' }}>
-          <img src="/logo.png" alt="logo" width={50} />
-        </Typography>
-        <IconButton
-          onClick={handleMenuOpen}
-          size="small"
-          sx={{ ml: 2 }}
-        >
-          <AccountCircleIcon sx={{ width: 32, height: 32, color: 'black' }} />
-        </IconButton>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleMenuClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
+    <>
+      <AppBar 
+        position="fixed" 
+        sx={{ 
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          bgcolor: 'white',
+          color: 'text.primary',
+        }}
+      >
+        <Toolbar>
+          {isMobile && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+          
+          <Typography 
+            variant="h6" 
+            component="div" 
+            sx={{ 
+              flexGrow: 1,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2 
+            }}
+          >
+            <img 
+              src="/logo.png" 
+              alt="logo" 
+              style={{ 
+                width: isMobile ? 35 : 50,
+                height: 'auto' 
+              }} 
+            />
+          </Typography>
+
+          <IconButton
+            onClick={handleMenuOpen}
+            size="small"
+            sx={{ ml: 2 }}
+          >
+            <img 
+              src="/avatar.jpg" 
+              alt="avatar" 
+              width={32} 
+              height={32} 
+              style={{ borderRadius: '50%' }}
+            />
+          </IconButton>
+
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+          >
+            <MenuItem onClick={handleLogout}>
+              <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
+              Logout
+            </MenuItem>
+          </Menu>
+        </Toolbar>
+      </AppBar>
+
+      {isMobile && (
+        <Drawer
+          variant="temporary"
+          anchor="left"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
           }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
+          sx={{
+            '& .MuiDrawer-paper': { width: 250 },
           }}
         >
-          <MenuItem onClick={handleLogout}>
-            <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
-            Logout
-          </MenuItem>
-        </Menu>
-      </Toolbar>
-    </AppBar>
+          {drawerContent}
+        </Drawer>
+      )}
+    </>
   );
 } 
