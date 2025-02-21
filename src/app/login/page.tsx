@@ -36,8 +36,10 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      await login({ email, password });
-      router.replace('/dashboard');
+      const response = await login({ email, password });
+      if (response.token) {
+        router.replace('/dashboard');
+      }
     } catch (err) {
       setError('Invalid email or password');
     } finally {

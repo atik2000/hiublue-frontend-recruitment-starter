@@ -16,8 +16,13 @@ export interface LoginCredentials {
   password: string;
 }
 
+export interface LoginResponse {
+  user: User;
+  token: string;
+}
+
 export interface AuthContextType extends AuthState {
-  login: (credentials: LoginCredentials) => Promise<void>;
+  login: (credentials: LoginCredentials) => Promise<LoginResponse>;
   logout: () => void;
   isLoading: boolean;
 } 

@@ -1,25 +1,32 @@
 import { forwardRef } from 'react';
-import { Icon } from '@iconify/react';
+import { Box, BoxProps } from '@mui/material';
+import { Icon } from '@mui/material';
 
-import Box, { BoxProps } from '@mui/material/Box';
-
-import { IconifyProps } from './types';
-
-// ----------------------------------------------------------------------
-
-interface Props extends BoxProps {
-  icon: IconifyProps;
+interface IconifyProps extends BoxProps {
+  icon?: React.ReactNode;
+  width?: number;
+  height?: number;
 }
 
-const Iconify = forwardRef<SVGElement, Props>(({ icon, width = 20, sx, ...other }, ref) => (
-  <Box
-    ref={ref}
-    component={Icon}
-    className="component-iconify"
-    icon={icon}
-    sx={{ width, height: width, ...sx }}
-    {...other}
-  />
-));
+const Iconify = forwardRef<HTMLDivElement, IconifyProps>(
+  ({ icon, width = 20, height = 20, sx, ...other }, ref) => (
+    <Box
+      ref={ref}
+      component={Icon}
+      sx={{
+        width,
+        height,
+        display: 'flex',
+        alignItems: 'center',
+        ...sx,
+      }}
+      {...other}
+    >
+      {icon}
+    </Box>
+  )
+);
+
+Iconify.displayName = 'Iconify';
 
 export default Iconify;

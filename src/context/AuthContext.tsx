@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
-import { AuthContextType, AuthState, LoginCredentials } from '@/types/auth';
+import { AuthContextType, AuthState, LoginCredentials, LoginResponse } from '@/types/auth';
 import Loading from '@/components/loading';
 import { login as apiLogin } from '@/services/api';
 
@@ -26,7 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(false);
   }, []);
 
-  const login = async (credentials: LoginCredentials) => {
+  const login = async (credentials: LoginCredentials): Promise<LoginResponse> => {
     try {
       setIsLoading(true);
       const data = await apiLogin(credentials.email, credentials.password);

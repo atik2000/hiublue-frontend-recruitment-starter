@@ -21,10 +21,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { logout } from '@/services/api';
 import { 
-  Logout as LogoutIcon,
+  Dashboard,
+  People,
   Menu as MenuIcon,
-  Dashboard as DashboardIcon,
-  People as PeopleIcon,
+  Logout,
 } from '@mui/icons-material';
 
 export default function Header() {
@@ -70,13 +70,13 @@ export default function Header() {
       <List>
         <ListItem button onClick={() => handleNavigation('/dashboard')}>
           <ListItemIcon>  
-            <DashboardIcon />
+            <Dashboard />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItem>
         <ListItem button onClick={() => handleNavigation('/onboarding')}>
           <ListItemIcon>
-            <PeopleIcon />
+            <People />
           </ListItemIcon>
           <ListItemText primary="Onboarding" />
         </ListItem>
@@ -155,7 +155,7 @@ export default function Header() {
             }}
           >
             <MenuItem onClick={handleLogout}>
-              <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
+              <Logout fontSize="small" sx={{ mr: 1 }} />
               Logout
             </MenuItem>
           </Menu>
